@@ -8,7 +8,7 @@ class TrainServiceRepository {
   final http.Client _client;
 
   Future<List<TrainService>> fetchTrainService() async {
-    final uri = Uri.parse('https://www.ishikawa-railway.jp/api/v1/trains')
+    final uri = Uri.parse('https://www.ishikawa-railway.jp/api/v1/trains');
     final response = await _client.get(uri);
 
     if (response.statusCode == 200) {

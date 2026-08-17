@@ -19,13 +19,13 @@ class TrainService {
 
   factory TrainService.fromJson(dynamic json) {
     return TrainService(
-      number: json['trainNumber'] as String,
-      type: json['trainType'] as String,
-      delay: json['delay'] as String,
-      startingStation: json['startingStation'] as String,
-      terminalStation: json['terminalStation'] as String,
-      fromStation: json['fromStation'] as String,
-      toStation: json['toStation'] as String,
+      number: json['odpt:trainNumber'] as String,
+      type: json['odpt:trainType'] as String,
+      delay: json['odpt:delay'] as String,
+      startingStation: json['odpt:startingStation'] as String,
+      terminalStation: json['odpt:terminalStation'] as String,
+      fromStation: json['odpt:fromStation'] as String,
+      toStation: json['odpt:toStation'] as String,
     );
   }
 }
