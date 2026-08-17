@@ -17,7 +17,7 @@ class TrainService {
   final String fromStation;
   final String toStation;
 
-  factory TrainService.fromJson(Map<String, dynamic> json) {
+  factory TrainService.fromJson(dynamic json) {
     return TrainService(
       number: json['trainNumber'] as String,
       type: json['trainType'] as String,
