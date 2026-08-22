@@ -20,11 +20,15 @@ enum TrainDirection {
 
 class DrivingPosition {
   const DrivingPosition({
+    required this.type,
+    required this.destination,
     required this.position,
     required this.direction,
     required this.delay,
   });
 
+  final String type;
+  final String destination;
   final int position;
   final TrainDirection direction;
   final String delay;
@@ -87,7 +91,15 @@ class TrainServiceViewDataList {
       toStation: toStation,
     );
 
+    final type = trainService.type;
+    final destination = Station.terminalOdptId(trainService.terminalStation);
+    if (destination == null) {
+      return null;
+    }
+
     return DrivingPosition(
+      type: type,
+      destination: destination.name,
       position: position,
       direction: direction,
       delay: trainService.delay,
@@ -120,6 +132,60 @@ class TrainServiceViewDataList {
 }
 
 class Station {
+  static const itoigawa = Station(
+    name: '糸魚川',
+    order: 150,
+    odptId: 'odpt.Station:AinokazeToyama.EtigoTokimeki.Itoigawa',
+  );
+
+  static const tomari = Station(
+    name: '泊',
+    order: 100,
+    odptId: 'odpt.Station:AinokazeToyama.AinokazeToyama.Tomari',
+  );
+
+  static const kurobe = Station(
+    name: '黒部',
+    order: 80,
+    odptId: 'odpt.Station:AinokazeToyama.AinokazeToyama.Kurobe',
+  );
+
+  static const toyama = Station(
+    name: '富山',
+    order: 60,
+    odptId: 'odpt.Station:AinokazeToyama.AinokazeToyama.Toyama',
+  );
+
+  static const isurugi = Station(
+    name: '石動',
+    order: 40,
+    odptId: 'odpt.Station:AinokazeToyama.AinokazeToyama.Isurugi',
+  );
+
+  static const wakuraonsen = Station(
+    name: '和倉温泉',
+    order: 202,
+    odptId: 'odpt.Station:JRWest.Nanao.Wakuraonsen',
+  );
+
+  static const nanao = Station(
+    name: '七尾',
+    order: 200,
+    odptId: 'odpt.Station:JRWest.Nanao.Nanao',
+  );
+
+  static const takamatsu = Station(
+    name: '高松',
+    order: 200,
+    odptId: 'odpt.Station:JRWest.Nanao.Takamatsu',
+  );
+
+  static const nakatsubata = Station(
+    name: '中津幡',
+    order: 190,
+    odptId: 'odpt.Station:JRWest.Nanao.Nakatsubata',
+  );
+
   static const kurikara = Station(
     name: '倶利伽羅',
     order: 38,
@@ -234,6 +300,24 @@ class Station {
     odptId: 'odpt.Station:IRIshikawa.IRIshikawa.Daishoji',
   );
 
+  static const ushinoya = Station(
+    name: '牛ノ谷',
+    order: 0,
+    odptId: 'odpt.Station:HapilineFukui.HapilineFukui.Ushinoya',
+  );
+
+  static const fukui = Station(
+    name: '福井',
+    order: 900,
+    odptId: 'odpt.Station:HapilineFukui.HapilineFukui.Fukui',
+  );
+
+  static const tsuruga = Station(
+    name: '敦賀',
+    order: 1000,
+    odptId: 'odpt.Station:HapilineFukui.HapilineFukui.Tsuruga',
+  );
+
   const Station({
     required this.name,
     required this.order,
@@ -245,6 +329,9 @@ class Station {
   final String odptId;
 
   static const List<Station> namedStations = [
+    tsuruga,
+    fukui,
+    ushinoya,
     daishoji,
     kagaonsen,
     iburihashi,
@@ -264,6 +351,14 @@ class Station {
     morimoto,
     tsubata,
     kurikara,
+    toyama,
+    kurobe,
+    tomari,
+    itoigawa,
+    nakatsubata,
+    takamatsu,
+    nanao,
+    wakuraonsen,
   ];
 
   static final Map<String, Station> _byOdptId = {
@@ -271,6 +366,10 @@ class Station {
   };
 
   static Station? fromOdptId(String id) {
+    return _byOdptId[id];
+  }
+
+  static Station? terminalOdptId(String id) {
     return _byOdptId[id];
   }
 

@@ -38,9 +38,9 @@ class TrainPage extends ConsumerWidget {
             itemBuilder: (context, index) {
               final data = datas[index];
 
-              final upTrains = data.downTrains;
+              final upTrains = data.upTrains;
 
-              final downTrains = data.upTrains;
+              final downTrains = data.downTrains;
 
               return _StationRow(
                 stationName: data.station.name,
@@ -193,17 +193,55 @@ class _TrainIcon extends StatelessWidget {
         children: [
           if (direction == TrainDirection.up)
             Icon(Icons.arrow_drop_up, color: color, size: 20)
+          else if (trainData.delay == '0')
+            const SizedBox(height: 20)
           else
-            const SizedBox(height: 20),
+            SizedBox(height: 20, child: Text('${trainData.delay}分遅れ')),
 
-          const Icon(Icons.train, size: 24),
+          GestureDetector(
+            onTap: () {
+              _showTrainDetail(context, trainData);
+            },
+            child: const Icon(Icons.train, size: 24),
+          ),
 
           if (direction == TrainDirection.down)
             Icon(Icons.arrow_drop_down, color: color, size: 20)
+          else if (trainData.delay == '0')
+            const SizedBox(height: 20)
           else
-            const SizedBox(height: 20),
+            SizedBox(height: 20, child: Text('${trainData.delay}分遅れ')),
         ],
       ),
     );
   }
+}
+
+void _showTrainDetail(BuildContext context, DrivingPosition train) {
+  showModalBottomSheet(
+    context: context,
+    builder: (context) {
+      return SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                '列車情報',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+
+              const SizedBox(height: 16),
+
+              Text('行き先: ${train.destination}'),
+              Text('種別: ${train.type}'),
+              Text('遅延: ${train.delay}'),
+            ],
+          ),
+        ),
+      );
+    },
+  );
 }
