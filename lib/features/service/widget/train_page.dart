@@ -38,9 +38,9 @@ class TrainPage extends ConsumerWidget {
             itemBuilder: (context, index) {
               final data = datas[index];
 
-              final upTrains = data.trainsDrivingPositionUp ?? [];
+              final upTrains = data.downTrains;
 
-              final downTrains = data.trainsDrivingPositionDown ?? [];
+              final downTrains = data.upTrains;
 
               return _StationRow(
                 stationName: data.station.name,
@@ -82,7 +82,7 @@ class _StationRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 80,
-      color: stationName == null ? Colors.white : Colors.grey.shade200,
+      color: stationName == '' ? Colors.white : Colors.grey.shade200,
       child: LayoutBuilder(
         builder: (context, constraints) {
           final screenCenter = constraints.maxWidth / 2;
@@ -102,7 +102,7 @@ class _StationRow extends StatelessWidget {
               // =========================
               // 駅
               // =========================
-              if (stationName != null)
+              if (stationName != '')
                 Positioned(
                   left: screenCenter - 10,
                   top: 30,
@@ -174,8 +174,6 @@ class _StationRow extends StatelessWidget {
     );
   }
 }
-
-enum TrainDirection { up, down }
 
 class _TrainIcon extends StatelessWidget {
   const _TrainIcon({required this.trainData, required this.direction});
