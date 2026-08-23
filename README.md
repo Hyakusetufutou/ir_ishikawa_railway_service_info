@@ -5,9 +5,10 @@ IRいしかわ鉄道の運行情報および列車走行位置を確認できる
 Flutter製のモバイルアプリです。
 
 ## スクリーンショット
-![運行情報](https://github.com/user-attachments/assets/46dfe387-736a-4260-874f-b7c6d24a10e6")
+<img width="400" alt="Image" src="https://github.com/user-attachments/assets/46dfe387-736a-4260-874f-b7c6d24a10e6" />
 
-![走行位置](https://github.com/user-attachments/assets/92ee184a-ad60-48ae-af74-d2ea530e56cb)
+<img width="400" alt="Image" src="https://github.com/user-attachments/assets/92ee184a-ad60-48ae-af74-d2ea530e56cb" />
+
 
 列車の現在位置を駅・駅間に分けて表示し、
 列車をタップすることで行き先・種別・遅延情報を確認できます。
