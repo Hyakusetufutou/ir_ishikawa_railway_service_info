@@ -14,7 +14,7 @@ class TrainPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('電車情報'),
+        title: const Text('走行位置'),
         backgroundColor: const Color.fromARGB(255, 85, 192, 242),
         actions: [
           IconButton(
@@ -64,7 +64,8 @@ class _StationRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
+      color: Colors.grey.shade200,
       height: 80,
       child: LayoutBuilder(
         builder: (context, constraints) {
@@ -236,7 +237,7 @@ class _TrainIcon extends StatelessWidget {
           if (direction == TrainDirection.up)
             Icon(Icons.arrow_drop_up, color: color, size: 20)
           else if (isDelayed)
-            SizedBox(height: 20, child: Text('${train.train.delay}分'))
+            SizedBox(height: 20, child: Text('＋${train.train.delay}分'))
           else
             const SizedBox(height: 20),
 
@@ -250,7 +251,7 @@ class _TrainIcon extends StatelessWidget {
           if (direction == TrainDirection.down)
             Icon(Icons.arrow_drop_down, color: color, size: 20)
           else if (isDelayed)
-            SizedBox(height: 20, child: Text('${train.train.delay}分'))
+            SizedBox(height: 20, child: Text('＋${train.train.delay}分'))
           else
             const SizedBox(height: 20),
         ],
