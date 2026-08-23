@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:ir_ishikawa_railway_service_info/features/service/model/train_service.dart';
+import 'package:ir_ishikawa_railway_service_info/features/position/model/train_service.dart';
 
 class TrainApi {
   TrainApi({http.Client? client}) : _client = client ?? http.Client();

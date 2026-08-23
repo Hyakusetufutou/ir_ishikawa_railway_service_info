@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:ir_ishikawa_railway_service_info/features/service/widget/train_page.dart';
+import 'package:ir_ishikawa_railway_service_info/features/position/widget/train_page.dart';
 
 void main() {
   runApp(

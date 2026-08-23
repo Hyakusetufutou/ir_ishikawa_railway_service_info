@@ -1,9 +1,9 @@
-import 'package:ir_ishikawa_railway_service_info/features/service/model/driving_train.dart';
-import 'package:ir_ishikawa_railway_service_info/features/service/model/rail_view_item.dart';
-import 'package:ir_ishikawa_railway_service_info/features/service/model/station.dart';
-import 'package:ir_ishikawa_railway_service_info/features/service/model/train.dart';
-import 'package:ir_ishikawa_railway_service_info/features/service/model/train_location.dart';
-import 'package:ir_ishikawa_railway_service_info/features/service/model/train_service.dart';
+import 'package:ir_ishikawa_railway_service_info/features/position/model/driving_train.dart';
+import 'package:ir_ishikawa_railway_service_info/features/position/model/rail_view_item.dart';
+import 'package:ir_ishikawa_railway_service_info/features/position/model/station.dart';
+import 'package:ir_ishikawa_railway_service_info/features/position/model/train.dart';
+import 'package:ir_ishikawa_railway_service_info/features/position/model/train_location.dart';
+import 'package:ir_ishikawa_railway_service_info/features/position/model/train_service.dart';
 
 class TrainServiceViewDataList {
   TrainServiceViewDataList(List<TrainService> trainServices)

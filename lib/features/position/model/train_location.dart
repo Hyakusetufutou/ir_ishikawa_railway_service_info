@@ -1,4 +1,4 @@
-import 'package:ir_ishikawa_railway_service_info/features/service/model/station.dart';
+import 'package:ir_ishikawa_railway_service_info/features/position/model/station.dart';
 
 sealed class TrainLocation {
   const TrainLocation();

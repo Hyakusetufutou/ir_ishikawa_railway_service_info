@@ -1,5 +1,5 @@
-import 'package:ir_ishikawa_railway_service_info/features/service/model/train.dart';
-import 'package:ir_ishikawa_railway_service_info/features/service/model/train_location.dart';
+import 'package:ir_ishikawa_railway_service_info/features/position/model/train.dart';
+import 'package:ir_ishikawa_railway_service_info/features/position/model/train_location.dart';
 
 class DrivingTrain {
   const DrivingTrain({

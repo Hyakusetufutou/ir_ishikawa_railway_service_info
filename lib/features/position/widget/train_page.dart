@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:ir_ishikawa_railway_service_info/features/service/model/driving_train.dart';
-import 'package:ir_ishikawa_railway_service_info/features/service/model/rail_view_item.dart';
-import 'package:ir_ishikawa_railway_service_info/features/service/model/train.dart';
-import 'package:ir_ishikawa_railway_service_info/features/service/provider/train_service_provider.dart';
+import 'package:ir_ishikawa_railway_service_info/features/position/model/driving_train.dart';
+import 'package:ir_ishikawa_railway_service_info/features/position/model/rail_view_item.dart';
+import 'package:ir_ishikawa_railway_service_info/features/position/model/train.dart';
+import 'package:ir_ishikawa_railway_service_info/features/position/provider/train_service_provider.dart';
 
 class TrainPage extends ConsumerWidget {
   const TrainPage({super.key});
