@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:ir_ishikawa_railway_service_info/features/position/model/train_service.dart';
 import 'package:ir_ishikawa_railway_service_info/features/info/model/train_information.dart';
 
 class TrainInfoApi {

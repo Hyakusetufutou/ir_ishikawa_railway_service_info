@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ir_ishikawa_railway_service_info/features/info/provider/train_info_provider.dart';
+import 'package:ir_ishikawa_railway_service_info/features/info/widget/info_page.dart';
+import 'package:ir_ishikawa_railway_service_info/features/position/provider/train_service_provider.dart';
 import 'package:ir_ishikawa_railway_service_info/features/position/widget/train_page.dart';
 
 void main() {
@@ -20,17 +23,17 @@ void main() {
   );
 }
 
-class MainPage extends StatefulWidget {
+class MainPage extends ConsumerStatefulWidget {
   const MainPage({super.key});
 
   @override
-  State<MainPage> createState() => _MainPageState();
+  ConsumerState<MainPage> createState() => _MainPageState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _MainPageState extends ConsumerState<MainPage> {
   int _currentIndex = 0;
 
-  final List<Widget> _pages = const [Center(child: Text('運行情報')), TrainPage()];
+  final List<Widget> _pages = const [InfoPage(), TrainPage()];
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +45,11 @@ class _MainPageState extends State<MainPage> {
           setState(() {
             _currentIndex = index;
           });
+          if (index == 1) {
+            ref.invalidate(trainInformationProvider);
+          } else if (index == 2) {
+            ref.invalidate(trainsProvider);
+          }
         },
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.info), label: '運行情報'),

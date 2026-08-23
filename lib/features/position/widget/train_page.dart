@@ -288,7 +288,7 @@ void _showTrainDetail(BuildContext context, DrivingTrain drivingTrain) {
 
                   Text('種別: ${train.type.name}'),
 
-                  Text('行き先: ${train.destination.name}'),
+                  Text('行き先: ${train.destination.name}駅'),
 
                   Text('遅延: ${train.delay}分'),
                 ],
