@@ -7,6 +7,7 @@ class TrainService {
     required this.terminalStation,
     required this.fromStation,
     required this.toStation,
+    required this.railDirection,
   });
 
   final String number;
@@ -16,6 +17,7 @@ class TrainService {
   final String terminalStation;
   final String fromStation;
   final String toStation;
+  final String railDirection;
 
   factory TrainService.fromJson(dynamic json) {
     return TrainService(
@@ -26,6 +28,7 @@ class TrainService {
       terminalStation: json['odpt:terminalStation'] as String,
       fromStation: json['odpt:fromStation'] as String,
       toStation: json['odpt:toStation'] as String,
+      railDirection: json['odpt:railDirection'] as String,
     );
   }
 }

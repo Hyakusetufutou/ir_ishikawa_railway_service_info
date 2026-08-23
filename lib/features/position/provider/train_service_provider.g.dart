@@ -63,13 +63,13 @@ final trainsProvider = TrainsProvider._();
 final class TrainsProvider
     extends
         $FunctionalProvider<
-          AsyncValue<List<TrainService>>,
-          List<TrainService>,
-          FutureOr<List<TrainService>>
+          AsyncValue<TrainServiceViewDataList>,
+          TrainServiceViewDataList,
+          FutureOr<TrainServiceViewDataList>
         >
     with
-        $FutureModifier<List<TrainService>>,
-        $FutureProvider<List<TrainService>> {
+        $FutureModifier<TrainServiceViewDataList>,
+        $FutureProvider<TrainServiceViewDataList> {
   TrainsProvider._()
     : super(
         from: null,
@@ -86,14 +86,14 @@ final class TrainsProvider
 
   @$internal
   @override
-  $FutureProviderElement<List<TrainService>> $createElement(
+  $FutureProviderElement<TrainServiceViewDataList> $createElement(
     $ProviderPointer pointer,
   ) => $FutureProviderElement(pointer);
 
   @override
-  FutureOr<List<TrainService>> create(Ref ref) {
+  FutureOr<TrainServiceViewDataList> create(Ref ref) {
     return trains(ref);
   }
 }
 
-String _$trainsHash() => r'04c1bb2bf22a12f070547985816ec568ad3f4f01';
+String _$trainsHash() => r'cef70ff872df423e51faae260a16859411cf41cc';
