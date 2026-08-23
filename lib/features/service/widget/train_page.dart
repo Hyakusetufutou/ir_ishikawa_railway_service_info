@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:ir_ishikawa_railway_service_info/features/service/model/train_service_view_data.dart';
+import 'package:ir_ishikawa_railway_service_info/features/service/model/driving_train.dart';
+import 'package:ir_ishikawa_railway_service_info/features/service/model/rail_view_item.dart';
+import 'package:ir_ishikawa_railway_service_info/features/service/model/train.dart';
 import 'package:ir_ishikawa_railway_service_info/features/service/provider/train_service_provider.dart';
 
 class TrainPage extends ConsumerWidget {
@@ -31,22 +33,17 @@ class TrainPage extends ConsumerWidget {
           return Center(child: Text('エラーが発生しました: $error'));
         },
         data: (serviceDatas) {
-          final datas = serviceDatas.trainServiceViewDatas;
+          final items = serviceDatas.trainServiceViewDatas;
 
           return ListView.builder(
-            itemCount: datas.length,
+            itemCount: items.length,
             itemBuilder: (context, index) {
-              final data = datas[index];
+              final item = items[index];
 
-              final upTrains = data.upTrains;
-
-              final downTrains = data.downTrains;
-
-              return _StationRow(
-                stationName: data.station.name,
-                upTrains: upTrains,
-                downTrains: downTrains,
-              );
+              return switch (item) {
+                StationViewItem item => _StationRow(data: item),
+                StationIntervalViewItem item => _StationIntervalRow(data: item),
+              };
             },
           );
         },
@@ -56,114 +53,155 @@ class TrainPage extends ConsumerWidget {
 }
 
 class _StationRow extends StatelessWidget {
-  const _StationRow({
-    required this.stationName,
-    required this.upTrains,
-    required this.downTrains,
-  });
+  const _StationRow({required this.data});
 
-  final String? stationName;
-  final List<DrivingPosition> upTrains;
-  final List<DrivingPosition> downTrains;
+  final StationViewItem data;
 
-  // 線路の幅
   static const double trackWidth = 10;
-
-  // 列車アイコンの幅
   static const double trainWidth = 32;
-
-  // 列車同士の間隔
   static const double trainSpacing = 10;
+  static const double trackToTrainSpacing = 10;
 
-  // 線路と列車の間隔
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 80,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final center = constraints.maxWidth / 2;
+
+          return Stack(
+            children: [
+              // 線路
+              Positioned(
+                left: center - trackWidth / 2,
+                top: 0,
+                bottom: 0,
+                child: Container(width: trackWidth, color: Colors.blue),
+              ),
+
+              // 駅
+              Positioned(
+                left: center - 10,
+                top: 30,
+                child: Container(
+                  width: 20,
+                  height: 20,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                    border: Border.all(color: Colors.blue, width: 4),
+                  ),
+                ),
+              ),
+
+              // 駅名
+              Positioned(
+                left: 10,
+                top: 0,
+                bottom: 0,
+                child: Center(
+                  child: Text(
+                    data.station.name,
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                ),
+              ),
+
+              // 上り列車
+              for (int i = 0; i < data.upTrains.length; i++)
+                Positioned(
+                  left:
+                      center -
+                      trackWidth / 2 -
+                      trackToTrainSpacing -
+                      trainWidth -
+                      i * (trainWidth + trainSpacing),
+                  top: 8,
+                  child: _TrainIcon(
+                    train: data.upTrains[i],
+                    direction: TrainDirection.up,
+                  ),
+                ),
+
+              // 下り列車
+              for (int i = 0; i < data.downTrains.length; i++)
+                Positioned(
+                  left:
+                      center +
+                      trackWidth / 2 +
+                      trackToTrainSpacing +
+                      i * (trainWidth + trainSpacing),
+                  top: 8,
+                  child: _TrainIcon(
+                    train: data.downTrains[i],
+                    direction: TrainDirection.down,
+                  ),
+                ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _StationIntervalRow extends StatelessWidget {
+  const _StationIntervalRow({required this.data});
+
+  final StationIntervalViewItem data;
+
+  static const double trackWidth = 10;
+  static const double trainWidth = 32;
+  static const double trainSpacing = 10;
   static const double trackToTrainSpacing = 10;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 80,
-      color: stationName == '' ? Colors.white : Colors.grey.shade200,
+      color: Colors.white,
       child: LayoutBuilder(
         builder: (context, constraints) {
-          final screenCenter = constraints.maxWidth / 2;
+          final center = constraints.maxWidth / 2;
 
           return Stack(
             children: [
-              // =========================
               // 線路
-              // =========================
               Positioned(
-                left: screenCenter - trackWidth / 2,
+                left: center - trackWidth / 2,
                 top: 0,
                 bottom: 0,
                 child: Container(width: trackWidth, color: Colors.blue),
               ),
 
-              // =========================
-              // 駅
-              // =========================
-              if (stationName != '')
-                Positioned(
-                  left: screenCenter - 10,
-                  top: 30,
-                  child: Container(
-                    width: 20,
-                    height: 20,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                      border: Border.all(color: Colors.blue, width: 4),
-                    ),
-                  ),
-                ),
-
-              // =========================
-              // 駅名
-              // =========================
-              if (stationName != null)
-                Positioned(
-                  left: 10,
-                  top: 0,
-                  bottom: 0,
-                  child: Center(
-                    child: Text(
-                      stationName!,
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                  ),
-                ),
-
-              // =========================
               // 上り列車
-              // =========================
-              for (int i = 0; i < upTrains.length; i++)
+              for (int i = 0; i < data.upTrains.length; i++)
                 Positioned(
                   left:
-                      screenCenter -
+                      center -
                       trackWidth / 2 -
                       trackToTrainSpacing -
                       trainWidth -
-                      (i * (trainWidth + trainSpacing)),
-                  top: 5,
+                      i * (trainWidth + trainSpacing),
+                  top: 10,
                   child: _TrainIcon(
-                    trainData: upTrains[i],
+                    train: data.upTrains[i],
                     direction: TrainDirection.up,
                   ),
                 ),
 
-              // =========================
               // 下り列車
-              // =========================
-              for (int i = 0; i < downTrains.length; i++)
+              for (int i = 0; i < data.downTrains.length; i++)
                 Positioned(
                   left:
-                      screenCenter +
+                      center +
                       trackWidth / 2 +
                       trackToTrainSpacing +
-                      (i * (trainWidth + trainSpacing)),
-                  top: 5,
+                      i * (trainWidth + trainSpacing),
+                  top: 10,
                   child: _TrainIcon(
-                    trainData: downTrains[i],
+                    train: data.downTrains[i],
                     direction: TrainDirection.down,
                   ),
                 ),
@@ -176,14 +214,18 @@ class _StationRow extends StatelessWidget {
 }
 
 class _TrainIcon extends StatelessWidget {
-  const _TrainIcon({required this.trainData, required this.direction});
+  const _TrainIcon({required this.train, required this.direction});
 
-  final DrivingPosition trainData;
+  final DrivingTrain train;
   final TrainDirection direction;
 
   @override
   Widget build(BuildContext context) {
-    final color = trainData.delay == '0' ? Colors.green : Colors.orange;
+    final isDelayed = train.train.isDelayed;
+
+    // 遅延なし = 緑
+    // 遅延あり = オレンジ
+    final color = isDelayed ? Colors.orange : Colors.green;
 
     return SizedBox(
       width: 32,
@@ -193,51 +235,63 @@ class _TrainIcon extends StatelessWidget {
         children: [
           if (direction == TrainDirection.up)
             Icon(Icons.arrow_drop_up, color: color, size: 20)
-          else if (trainData.delay == '0')
-            const SizedBox(height: 20)
+          else if (isDelayed)
+            SizedBox(height: 20, child: Text('${train.train.delay}分'))
           else
-            SizedBox(height: 20, child: Text('${trainData.delay}分遅れ')),
+            const SizedBox(height: 20),
 
           GestureDetector(
             onTap: () {
-              _showTrainDetail(context, trainData);
+              _showTrainDetail(context, train);
             },
             child: const Icon(Icons.train, size: 24),
           ),
 
           if (direction == TrainDirection.down)
             Icon(Icons.arrow_drop_down, color: color, size: 20)
-          else if (trainData.delay == '0')
-            const SizedBox(height: 20)
+          else if (isDelayed)
+            SizedBox(height: 20, child: Text('${train.train.delay}分'))
           else
-            SizedBox(height: 20, child: Text('${trainData.delay}分遅れ')),
+            const SizedBox(height: 20),
         ],
       ),
     );
   }
 }
 
-void _showTrainDetail(BuildContext context, DrivingPosition train) {
+void _showTrainDetail(BuildContext context, DrivingTrain drivingTrain) {
+  final train = drivingTrain.train;
+
   showModalBottomSheet(
     context: context,
+    showDragHandle: true,
     builder: (context) {
       return SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
+          padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
-                '列車情報',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    '列車情報',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+
+                  const SizedBox(height: 16),
+
+                  Text('列車番号: ${train.id}'),
+
+                  Text('種別: ${train.type.name}'),
+
+                  Text('行き先: ${train.destination.name}'),
+
+                  Text('遅延: ${train.delay}分'),
+                ],
               ),
-
-              const SizedBox(height: 16),
-
-              Text('行き先: ${train.destination}'),
-              Text('種別: ${train.type}'),
-              Text('遅延: ${train.delay}'),
             ],
           ),
         ),
