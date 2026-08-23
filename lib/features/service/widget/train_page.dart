@@ -244,7 +244,7 @@ class _TrainIcon extends StatelessWidget {
             onTap: () {
               _showTrainDetail(context, train);
             },
-            child: const Icon(Icons.train, size: 24),
+            child: Icon(Icons.train, color: train.train.type.color, size: 24),
           ),
 
           if (direction == TrainDirection.down)

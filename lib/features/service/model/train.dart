@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:ir_ishikawa_railway_service_info/features/service/model/station.dart';
 
 enum TrainDirection {
@@ -19,13 +20,14 @@ enum TrainDirection {
 }
 
 enum TrainType {
-  local(name: '普通'),
-  rapid(name: '快速'),
-  limitedExpress(name: '特急'),
-  unknown(name: '');
+  local(name: '普通', color: Colors.black),
+  rapid(name: '快速', color: Colors.green),
+  limitedExpress(name: '特急', color: Colors.purple),
+  unknown(name: '', color: Colors.black);
 
-  const TrainType({required this.name});
+  const TrainType({required this.name, required this.color});
   final String name;
+  final Color color;
 
   static TrainType fromOdpt(String value) {
     switch (value) {
