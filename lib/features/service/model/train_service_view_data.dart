@@ -141,16 +141,3 @@ class TrainServiceViewDataList {
     }).toList();
   }
 }
-
-class RailDirection {
-  static bool isRailDirectionUp(String railDirection) {
-    switch (railDirection) {
-      case 'odpt.RailDirection:IRIshikawa.Fukui':
-        return true;
-      case 'odpt.RailDirection:IRIshikawa.Toyama':
-        return false;
-      default:
-        throw '行き先不明';
-    }
-  }
-}
