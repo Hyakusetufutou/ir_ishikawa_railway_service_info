@@ -47,7 +47,9 @@ class InfoPage extends ConsumerWidget {
                     'IRいしかわ鉄道(大聖寺〜倶利伽羅)',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
-                  Text(info.text, style: TextStyle(fontSize: 20)),
+                  Flexible(
+                    child: Text(info.text, style: TextStyle(fontSize: 20)),
+                  ),
                 ],
               ),
             ),
